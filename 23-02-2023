@@ -1,0 +1,285 @@
+Write a python class Student with following data members:
+class Student:
+    def _init_(self, name, roll_no, marks):
+        self.name = name
+        self.roll_no = roll_no
+        self.marks = marks
+    
+    def display(self):
+        print("Name:", self.name)
+        print("Roll No.:", self.roll_no)
+        print("Marks:", self.marks)
+        
+    def marksAvg(self):
+        return sum(self.marks) / len(self.marks)
+ # Create a new Student object
+s = Student("John Smith", 12345, [80, 90, 85])
+
+# Display the details of the student
+s.display()
+
+# Calculate and print the average marks of the student
+avg_marks = s.marksAvg()
+print("Average marks:", avg_marks)
+
+Name: John Smith
+Roll No.: 12345
+Marks: [80, 90, 85]
+Average marks: 85.0
+
+
+2:
+Define a class Point having x and y coordinates as data members. Add appropriate
+constructor, destructor. Add a method that computes and returns the distance between
+2 points.
+d=√((x2 – x1)² + (y2 – y1)²)
+
+
+
+import math
+
+class Point:
+    def _init_(self, x, y):
+        self.x = x
+        self.y = y
+        
+    def _del_(self):
+        print("Point object deleted")
+    
+    def distance(self, other):
+        dx = self.x - other.x
+        dy = self.y - other.y
+        return math.sqrt(dx * 2 + dy * 2)
+# Create two new Point objects
+p1 = Point(0, 0)
+p2 = Point(3, 4)
+
+# Calculate and print the distance between the two points
+dist = p1.distance(p2)
+print("Distance between points:", dist)
+
+Distance between points: 5.0
+
+
+3:
+Write a program that computes the sum of n terms of following series.
+1
+2
+- 2
+2 + 3
+2
+- 4
+2 + … + n
+2
+
+
+n = int(input("Enter the value of n: "))
+
+# Initialize the sum to zero
+sum = 0
+
+# Loop through the terms of the series and add them to the sum
+for i in range(1, n+1):
+    if i % 2 == 0:
+        sum -= i // 2
+    else:
+        sum += (i // 2) + 1
+
+# Print the sum of the series
+print("Sum of the series:", sum)
+
+4:Write a python function to count words and vowels present in string passed as an
+argument.
+
+def count_words_vowels(s):
+    # Convert the string to lowercase to simplify vowel counting
+    s = s.lower()
+    
+    # Initialize word and vowel counts to zero
+    word_count = 0
+    vowel_count = 0
+    
+    # Loop through each character in the string
+    for c in s:
+        # Increment the word count if the current character is a space
+        if c == " ":
+            word_count += 1
+        
+        # Increment the vowel count if the current character is a vowel
+        if c in "aeiou":
+            vowel_count += 1
+    
+    # Add 1 to the word count to account for the last word in the string
+    word_count += 1
+    
+    # Return a tuple containing the word and vowel counts
+    return (word_count, vowel_count)
+s = "This is a sample string with some vowels in it."
+word_count, vowel_count = count_words_vowels(s)
+print("Number of words:", word_count)
+print("Number of vowels:", vowel_count)
+
+Number of words: 9
+Number of vowels: 12
+
+5:
+Write a python function isPalindrome which accepts a string as an argument and if the
+string is a palindrome it should return True otherwise False. The function must be
+implemented using loops and no builtin functions / slicing should be used.
+
+def isPalindrome(s):
+    # Convert the input string to lowercase
+    s = s.lower()
+    
+    # Initialize two pointers, one at the beginning of the string
+    # and one at the end of the string
+    left = 0
+    right = len(s) - 1
+    
+    # Loop through the string, comparing the characters at each pointer
+    while left < right:
+        # If the characters are not the same, the string is not a palindrome
+        if s[left] != s[right]:
+            return False
+        
+        # Increment the left pointer and decrement the right pointer
+        left += 1
+        right -= 1
+    
+    # If we've made it to the end of the loop, the string is a palindrome
+    return True
+s = "racecar"
+if isPalindrome(s):
+    print(f"{s} is a palindrome")
+else:
+    print(f"{s} is not a palindrome")
+ racecar is a palindrome
+
+6:Write a python program to display the count of words having length n, present in a text
+file 'Sample.txt'. The value of n must be received from user input. Handle appropriate
+exceptions.
+
+
+filename = "Sample.txt"
+
+# Get user input for word length
+while True:
+    try:
+        n = int(input("Enter word length: "))
+        break
+    except ValueError:
+        print("Please enter a valid integer.")
+
+# Open the file for reading
+try:
+    with open(filename, 'r') as file:
+        # Initialize a counter for the number of words of length n
+        count = 0
+        
+        # Loop through each line in the file
+        for line in file:
+            # Split the line into individual words
+            words = line.split()
+            
+            # Loop through each word in the line
+            for word in words:
+                # If the length of the word is n, increment the counter
+                if len(word) == n:
+                    count += 1
+        
+        # Print the final count of words of length n
+        print(f"Number of words of length {n}: {count}")
+except FileNotFoundError:
+    print(f"Error: file {filename} not found.")
+    
+  7:Write a python program which accepts only a three-digit number from the user and
+1. Print the reverse of the number
+2. Calculate and print the sum of digits
+3. If a user enters a number other than a three-digit number the program should
+display an invalid input message.
+
+filename = "Sample.txt"
+
+# Get user input for word length
+while True:
+    try:
+        n = int(input("Enter word length: "))
+        break
+    except ValueError:
+        print("Please enter a valid integer.")
+
+# Open the file for reading
+try:
+    with open(filename, 'r') as file:
+        # Initialize a counter for the number of words of length n
+        count = 0
+        
+        # Loop through each line in the file
+        for line in file:
+            # Split the line into individual words
+            words = line.split()
+            
+            # Loop through each word in the line
+            for word in words:
+                # If the length of the word is n, increment the counter
+                if len(word) == n:
+                    count += 1
+        
+        # Print the final count of words of length n
+        print(f"Number of words of length {n}: {count}")
+except FileNotFoundError:
+    print(f"Error: file {filename} not found.")
+   
+ 8:Write a menu driven python program to perform the following operations:
+1. create set A and set B from user input. (input at least 5 elements in each set)
+2. perform symmetric difference : A ^ B
+3. perform union operation: A | B
+4. Perform intersection operation: A & B
+
+# Function to create a set from user input
+def create_set():
+    s = set()
+    n = int(input("Enter the number of elements in the set: "))
+    print("Enter the elements of the set:")
+    for i in range(n):
+        s.add(input())
+    return s
+
+# Main program
+while True:
+    print("\nSet Operations Menu:")
+    print("1. Create set A and set B")
+    print("2. Perform symmetric difference: A ^ B")
+    print("3. Perform union operation: A | B")
+    print("4. Perform intersection operation: A & B")
+    print("5. Quit")
+    choice = input("Enter your choice (1-5): ")
+    
+    if choice == '1':
+        A = create_set()
+        B = create_set()
+        print("Set A:", A)
+        print("Set B:", B)
+    elif choice == '2':
+        if 'A' not in locals() or 'B' not in locals():
+            print("Please create sets A and B first.")
+        else:
+            result = A ^ B
+            print("Symmetric difference of A and B:", result)
+    elif choice == '3':
+        if 'A' not in locals() or 'B' not in locals():
+            print("Please create sets A and B first.")
+        else:
+            result = A | B
+            print("Union of A and B:", result)
+    elif choice == '4':
+        if 'A' not in locals() or 'B' not in locals():
+            print("Please create sets A and B first.")
+        else:
+            result = A & B
+            print("Intersection of A and B:", result)
+    elif choice == '5':
+        break
+    else:
+        print("Invalid choice. Please enter a number from 1 to 5.")
+    
