@@ -1,0 +1,39 @@
+Write a python function which accepts a number as an argument and returns True if the number is an Armstrong number
+
+
+
+def is_armstrong_number(number):
+    # Convert the number to a string to count the number of digits
+    num_str = str(number)
+    # Count the number of digits in the number
+    num_digits = len(num_str)
+    # Initialize the sum of digits to 0
+    sum_of_digits = 0
+    # Iterate through each digit of the number and raise it to the power of the number of digits
+    for digit in num_str:
+        sum_of_digits += int(digit)**num_digits
+    # Check if the sum of the digits is equal to the original number
+    if sum_of_digits == number:
+        return True
+    else:
+        return False
+Write a Python program which takes email address as input (format : "username@domainname")                                                                                               # Take email address as input
+email = input("Enter email address (format: username@domainname): ")
+
+# Print the email address
+print("Email address: " + email)
+Write a Python program which writes at least three email addresses into a text file emails.txt.                                                                                                                                          # List of email addresses
+emails = ["johndoe@gmail.com", "janedoe@yahoo.com", "bobsmith@hotmail.com"]
+
+# Write email addresses to file
+with open("emails.txt", "w") as f:
+    for email in emails:
+        f.write(email + "\n")
+Write a Python program which prints all the usernames excluding domain name.
+# Read email addresses from file
+with open("emails.txt", "r") as f:
+    for line in f:
+        # Split email address at "@" symbol
+        username, domain = line.strip().split("@")
+        # Print username
+        print(username)
