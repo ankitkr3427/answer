@@ -1,0 +1,13 @@
+INP
+STA A
+INP
+CMA
+INC
+STA B
+ADD A
+STA C
+OUT
+HLT
+A: .data 1 0
+B: .data 1 0
+C: .data 1 0

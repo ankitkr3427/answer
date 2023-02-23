@@ -1,0 +1,8 @@
+LDA A
+ADD B
+STA C
+OUT 
+HLT
+A: .data 1 2
+B: .data 1 3
+C: .data 1 0
