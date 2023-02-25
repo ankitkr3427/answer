@@ -1,0 +1,435 @@
+Q1- Create an HTML document with following formatting- Bold, Italics, Underline, Colours, Headings, Titles, Font and font width, background, paragraph, line breaks, horizontal line, blinking text, as well as marquee text
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My HTML Formatting Example</title>
+    <style>
+      /* CSS styles go here */
+      h1 {
+        color: red;
+        font-size: 36px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        text-decoration: underline;
+      }
+      p {
+        font-family: Georgia, serif;
+        font-size: 18px;
+        line-height: 1.5;
+        color: #333;
+        text-align: justify;
+      }
+      .highlight {
+        color: blue;
+        font-weight: bold;
+        font-style: italic;
+        text-decoration: underline;
+      }
+      .bg-yellow {
+        background-color: yellow;
+      }
+      .wide {
+        letter-spacing: 3px;
+      }
+      .blinking {
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0% {
+          visibility: visible;
+        }
+        50% {
+          visibility: hidden;
+        }
+        100% {
+          visibility: visible;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My HTML Formatting Example</h1>
+    <p>This is a <b class="highlight">bold</b> word and this is an <i class="highlight">italic</i> word. This word is <u class="highlight">underlined</u>.</p>
+    <p>This paragraph has a yellow <span class="bg-yellow">background</span> color.</p>
+    <p>This paragraph has a <span class="wide">wide</span> font.</p>
+    <h2>Heading 2</h2>
+    <p>This is a paragraph under Heading 2.</p>
+    <h3>Heading 3</h3>
+    <p>This is a paragraph under Heading 3.</p>
+    <h4>Heading 4</h4>
+    <p>This is a paragraph under Heading 4.</p>
+    <h5>Heading 5</h5>
+    <p>This is a paragraph under Heading 5.</p>
+    <h6>Heading 6</h6>
+    <p>This is a paragraph under Heading 6.</p>
+    <hr>
+    <p>This is a paragraph with a horizontal line above it.</p>
+    <marquee behavior="scroll" direction="left" class="blinking">
+      This text is scrolling from left to right and blinking
+    </marquee>
+    <br>
+    <p>This is a paragraph with a line break above it.</p>
+  </body>
+</html>
+
+
+
+
+Q-2 Creating an HTML document for displaying the current semester's time table
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Current Semester Time Table</title>
+    <style>
+      /* add some basic styling */
+      table {
+        border-collapse: collapse;
+        margin: 20px;
+      }
+      th, td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Current Semester Time Table</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>9:00 - 10:00</td>
+          <td>Math</td>
+          <td>English</td>
+          <td>History</td>
+          <td>Science</td>
+          <td>Art</td>
+        </tr>
+        <tr>
+          <td>10:00 - 11:00</td>
+          <td>English</td>
+          <td>Science</td>
+          <td>Math</td>
+          <td>History</td>
+          <td>PE</td>
+        </tr>
+        <tr>
+          <td>11:00 - 12:00</td>
+          <td>Science</td>
+          <td>Math</td>
+          <td>English</td>
+          <td>Art</td>
+          <td>History</td>
+
+Q-3 Create a website with horizontal and vertical frames. Top horizontal frame needs to show your college names and logo. Bottom horizontal frame is to be split into  two vertical frames, the left frame has hyperlinks to pages related to faculty, courses, students activities, etc. The right frame shows the corresponding webpage based on the link clicked on the left frame
+
+The use of frames in web design is no longer recommended as it can lead to issues with usability, accessibility, and search engine optimization. Instead, it is recommended to use modern web technologies like HTML5, CSS, and JavaScript to create responsive, mobile-friendly web pages. However, for the purpose of answering your question, I will provide an example using frames.
+
+Here's an example of how you could create a website with horizontal and vertical frames using HTML:
+
+html
+Copy code
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My College Website</title>
+  </head>
+  <frameset cols="*" rows="100,*">
+    <frame src="topframe.html" name="topframe" scrolling="no" noresize>
+    <frameset rows="*" cols="200,*">
+      <frame src="leftframe.html" name="leftframe" scrolling="auto" noresize>
+      <frame src="homepage.html" name="mainframe" scrolling="auto" noresize>
+    </frameset>
+  </frameset>
+</html>
+In this example, we have used the frameset element to create the frames. The cols and rows attributes specify the layout of the frames, and the frame elements specify the source of each frame. The name attribute gives each frame a name that can be used to target it from other frames or from JavaScript.
+
+Here's an example of what the topframe.html file could look like:
+
+html
+Copy code
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My College Name and Logo</title>
+  </head>
+  <body>
+    <img src="college_logo.png" alt="My College Logo" />
+    <h1>My College Name</h1>
+  </body>
+</html>
+This file contains an image of your college logo and the name of your college.
+
+Here's an example of what the leftframe.html file could look like:
+
+html
+Copy code
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Left Frame Navigation</title>
+  </head>
+  <body>
+    <ul>
+      <li><a href="faculty.html" target="mainframe">Faculty</a></li>
+      <li><a href="courses.html" target="mainframe">Courses</a></li>
+      <li><a href="students.html" target="mainframe">Student Activities</a></li>
+    </ul>
+  </body>
+</html>
+This file contains a list of hyperlinks to different pages related to faculty, courses, and student activities. Each link has a target attribute that specifies which frame should display the corresponding webpage when the link is clicked.
+
+Here's an example of what the homepage.html, faculty.html, courses.html, and students.html files could look like:
+
+html
+Copy code
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Homepage</title>
+  </head>
+  <body>
+    <h1>Welcome to My College Website</h1>
+    <p>This is the homepage of my college website.</p>
+  </body>
+</html>
+html
+Copy code
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Faculty Page</title>
+  </head>
+  <body>
+    <h1>Faculty</h1>
+    <p>This is the faculty page of my college website.</p>
+  </body>
+</html>
+html
+Copy code
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Courses Page</title>
+  </head>
+  <body>
+    <h1>Courses</h1>
+
+Q-4 Create a student registration form using HTML which has the following controls and make an interactive content presentation using CSS
+1. Text boxes buttons  
+2. dropdown box
+3. Option/Radio
+4. Check boxes
+5. Reset and submit button
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Student Registration Form</title>
+    <style>
+      /* Add CSS styling to the form */
+      form {
+        width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+      }
+      h2 {
+        text-align: center;
+        color: #555;
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+        font-weight: bold;
+      }
+      input[type="text"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+      }
+      input[type="radio"] {
+        margin-right: 10px;
+      }
+      input[type="submit"], input[type="reset"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+      }
+      input[type="submit"]:hover, input[type="reset"]:hover {
+        background-color: #45a049;
+      }
+      input[type="reset"] {
+        background-color: #f44336;
+        margin-left: 10px;
+      }
+      input[type="reset"]:hover {
+        background-color: #da3f3a;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <h2>Student Registration Form</h2>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" required>
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" required>
+      <label for="gender">Gender:</label>
+      <input type="radio" id="male" name="gender" value="male" required>
+      <label for="male">Male</label>
+      <input type="radio" id="female" name="gender" value="female">
+      <label for="female">Female</label>
+      <label for="course">Course:</label>
+      <select id="course" name="course">
+        <option value="computer_science">Computer Science</option>
+        <option value="engineering">Engineering</option>
+        <option value="business">Business</option>
+        <option value="art">Art</option>
+      </select>
+      <label for="interests">Interests:</label>
+      <input type="checkbox" id="coding" name="interests[]" value="coding">
+      <label for="coding">Coding</label>
+      <input type="checkbox" id="music" name="interests[]" value="music">
+      <label for="music">Music</label>
+      <input type="checkbox" id="sports" name="interests[]" value="sports">
+      <label for
+
+Q-6 Create a  student registration form using text, radio button, check box, drop down box, teact field and all other required HTML elements. Customize the CSS ans javascript to input and validate all data. Create functions to perform validation of each element.
+a. Roll number is a 7 digit numeric value
+b. Name should be an alphabetical value(string)
+c.  Non empty and valid fields like DOB
+
+ Here's an example of a webpage for a department with a dropdown navigation menu for faculty, courses, activities, etc. implemented using styles, rules, selectors, etc. learned in CSS:
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Registration Form</title>
+	<style>
+		label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: bold;
+		}
+
+		input[type="text"], select {
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			width: 250px;
+		}
+
+		input[type="radio"], input[type="checkbox"] {
+			margin-right: 5px;
+		}
+
+		button {
+			padding: 10px;
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		button:hover {
+			background-color: #3e8e41;
+		}
+
+		.error {
+			color: red;
+			font-size: 12px;
+			margin-bottom: 5px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Student Registration Form</h1>
+	<form id="registration-form">
+		<label for="roll-no">Roll Number:</label>
+		<input type="text" id="roll-no" name="roll-no"><span id="roll-no-error" class="error"></span>
+
+		<label for="name">Name:</label>
+		<input type="text" id="name" name="name"><span id="name-error" class="error"></span>
+
+		<label for="gender">Gender:</label>
+		<input type="radio" id="male" name="gender" value="male">
+		<label for="male">Male</label>
+		<input type="radio" id="female" name="gender" value="female">
+		<label for="female">Female</label>
+		<input type="radio" id="other" name="gender" value="other">
+		<label for="other">Other</label>
+		<span id="gender-error" class="error"></span>
+
+		<label for="dob">Date of Birth:</label>
+		<input type="date" id="dob" name="dob"><span id="dob-error" class="error"></span>
+
+		<label for="department">Department:</label>
+		<select id="department" name="department">
+			<option value="">Select Department</option>
+			<option value="CSE">Computer Science and Engineering</option>
+			<option value="EEE">Electrical and Electronics Engineering</option>
+			<option value="ME">Mechanical Engineering</option>
+		</select>
+		<span id="department-error" class="error"></span>
+
+		<label for="courses">Courses:</label>
+		<input type="checkbox" id="java" name="courses[]" value="java">
+		<label for="java">Java</label>
+		<input type="checkbox" id="python" name="courses[]" value="python">
+		<label for="python">Python</label>
+		<input type="checkbox" id="javascript" name="courses[]" value="javascript">
+		<label for="javascript">JavaScript</label>
+		<span id="courses-error" class="error"></span>
+
+		<label for="address">Address:</label>
+		<textarea id="address" name="address"></textarea>
+		<span id="address-error" class="error"></span>
+
+		<button type="submit">Submit</button>
+	</form>
+
+	<script>
+		// Validation functions
+
+
+
+
+
