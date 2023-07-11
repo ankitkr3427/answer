@@ -1,0 +1,135 @@
+Answer 1
+
+class SET:
+    def __init__(self, elements):
+        self.elements = elements
+
+    def ismember(self, element):
+        return element in self.elements
+
+    def powerset(self):
+        n = len(self.elements)
+        power_set_size = 2 ** n
+        result = []
+        for counter in range(power_set_size):
+            subset = []
+            for j in range(n):
+                if counter & (1 << j):
+                    subset.append(self.elements[j])
+            result.append(subset)
+        return result
+
+    def subset(self, other_set):
+        return set(self.elements).issubset(other_set)
+
+    def union(self, other_set):
+        return set(self.elements).union(other_set)
+
+    def intersection(self, other_set):
+        return set(self.elements).intersection(other_set)
+
+    def complement(self, universal_set):
+        return list(set(universal_set).difference(self.elements))
+
+    def difference(self, other_set):
+        return set(self.elements).difference(other_set)
+
+    def symmetric_difference(self, other_set):
+        return set(self.elements).symmetric_difference(other_set)
+
+    def cartesian_product(self, other_set):
+        result = []
+        for element1 in self.elements:
+            for element2 in other_set:
+                result.append((element1, element2))
+        return result
+
+
+def print_power_set(power_set):
+    for subset in power_set:
+        print(subset)
+
+
+def print_set_elements(set_elements):
+    print(', '.join(str(element) for element in set_elements))
+
+
+def get_input_set():
+    set_elements = input("Enter elements of the set (comma-separated): ").split(",")
+    return [element.strip() for element in set_elements]
+
+
+def menu():
+    print("SET Operations:")
+    print("1. Check if element belongs to the set")
+    print("2. Generate powerset")
+    print("3. Check if a set is a subset of another set")
+    print("4. Union of two sets")
+    print("5. Intersection of two sets")
+    print("6. Complement of a set")
+    print("7. Difference of two sets")
+    print("8. Symmetric difference of two sets")
+    print("9. Cartesian product of two sets")
+    print("0. Exit")
+    print()
+
+    choice = input("Enter your choice: ")
+    return choice
+
+
+def main():
+    choice = ""
+    while choice != "0":
+        choice = menu()
+
+        if choice == "1":
+            element = input("Enter the element to check: ")
+            result = set_instance.ismember(element)
+            print(f"The element {element} is present in the set: {result}")
+        elif choice == "2":
+            power_set = set_instance.powerset()
+            print("Power Set:")
+            print_power_set(power_set)
+        elif choice == "3":
+            other_set_elements = get_input_set()
+            result = set_instance.subset(other_set_elements)
+            print(f"The set is a subset of the other set: {result}")
+        elif choice == "4":
+            other_set_elements = get_input_set()
+            union_set = set_instance.union(other_set_elements)
+            print("Union of two sets:")
+            print_set_elements(union_set)
+        elif choice == "5":
+            other_set_elements = get_input_set()
+            intersection_set = set_instance.intersection(other_set_elements)
+            print("Intersection of two sets:")
+            print_set_elements(intersection_set)
+        elif choice == "6":
+            universal_set_elements = get_input_set()
+            complement_set = set_instance.complement(universal_set_elements)
+            print("Complement of the set:")
+            print_set_elements(complement_set)
+        elif choice == "7":
+            other_set_elements = get_input_set()
+            difference_set = set_instance.difference(other_set_elements)
+            print("Difference of two sets:")
+            print_set_elements(difference_set)
+        elif choice == "8":
+            other_set_elements = get_input_set()
+            symmetric_difference_set = set_instance.symmetric_difference(other_set_elements)
+            print("Symmetric Difference of two sets:")
+            print_set_elements(symmetric_difference_set)
+        elif choice == "9":
+            other_set_elements = get_input_set()
+            cartesian_product_set = set_instance.cartesian_product(other_set_elements)
+            print("Cartesian Product of two sets:")
+            print(cartesian_product_set)
+        elif choice == "0":
+            print("Exiting the program...")
+        else:
+            print("Invalid choice! Please try again.")
+
+
+set_elements = get_input_set()
+set_instance = SET(set_elements)
+main()
