@@ -133,3 +133,246 @@ def main():
 set_elements = get_input_set()
 set_instance = SET(set_elements)
 main()
+
+
+Answer 2
+
+class RELATION:
+    def __init__(self, matrix):
+        self.matrix = matrix
+        self.size = len(matrix)
+
+    def is_reflexive(self):
+        for i in range(self.size):
+            if not self.matrix[i][i]:
+                return False
+        return True
+
+    def is_symmetric(self):
+        for i in range(self.size):
+            for j in range(i+1, self.size):
+                if self.matrix[i][j] != self.matrix[j][i]:
+                    return False
+        return True
+
+    def is_antisymmetric(self):
+        for i in range(self.size):
+            for j in range(i+1, self.size):
+                if self.matrix[i][j] and self.matrix[j][i]:
+                    return False
+        return True
+
+    def is_transitive(self):
+        for i in range(self.size):
+            for j in range(self.size):
+                if self.matrix[i][j]:
+                    for k in range(self.size):
+                        if self.matrix[j][k] and not self.matrix[i][k]:
+                            return False
+        return True
+
+    def determine_relation_type(self):
+        is_equiv = self.is_reflexive() and self.is_symmetric() and self.is_transitive()
+        is_partial_order = self.is_reflexive() and self.is_antisymmetric() and self.is_transitive()
+
+        if is_equiv:
+            return "Equivalence Relation"
+        elif is_partial_order:
+            return "Partial Order Relation"
+        else:
+            return "None"
+
+# Example usage
+matrix = [[True, False, True],
+          [False, True, False],
+          [True, False, True]]
+
+relation = RELATION(matrix)
+print("Reflexive:", relation.is_reflexive())
+print("Symmetric:", relation.is_symmetric())
+print("Antisymmetric:", relation.is_antisymmetric())
+print("Transitive:", relation.is_transitive())
+print("Relation Type:", relation.determine_relation_type())
+
+
+
+Answer 3 
+
+import itertools
+
+def generate_permutations(digits, with_repetition=False):
+    if with_repetition:
+        permutations = itertools.product(digits, repeat=len(digits))
+    else:
+        permutations = itertools.permutations(digits)
+
+    for permutation in permutations:
+        print(''.join(permutation))
+
+# Example usage
+digits = ['1', '2', '3']
+generate_permutations(digits, with_repetition=True)
+generate_permutations(digits, with_repetition=False)
+
+
+Answer 4
+
+def find_solutions(n, C):
+    solutions = []
+    find_solutions_recursive(n, C, [], solutions)
+    return solutions
+
+def find_solutions_recursive(n, C, current_solution, solutions):
+    if n == 0:
+        if C == 0:
+            solutions.append(current_solution)
+        return
+    
+    for i in range(C + 1):
+        find_solutions_recursive(n - 1, C - i, current_solution + [i], solutions)
+
+# Example usage:
+n = int(input("Enter the value of n: "))
+C = int(input("Enter the value of C: "))
+
+all_solutions = find_solutions(n, C)
+
+print("Solutions:")
+for solution in all_solutions:
+    print(solution)
+
+
+
+
+Abswer 5 
+
+def evaluate_polynomial(coefficients, n):
+    """
+    Evaluates a polynomial function for a given value of 'n'.
+
+    Arguments:
+    coefficients -- a list of coefficients of the polynomial in ascending order of degree
+    n -- the value at which the polynomial is evaluated
+
+    Returns:
+    The value of the polynomial at 'n'
+    """
+    result = 0
+    degree = len(coefficients) - 1
+    for i in range(len(coefficients)):
+        result += coefficients[i] * (n ** (degree - i))
+    return result
+
+
+# Example usage
+coefficients = [4, 2, 9]  # coefficients of the polynomial: 4n^2 + 2n + 9
+n = 5  # value of 'n'
+result = evaluate_polynomial(coefficients, n)
+print(f"The value of the polynomial at n = {n} is: {result}")
+
+
+
+
+
+Answer 6
+
+def evaluate_polynomial(coefficients, n):
+    """
+    Evaluates a polynomial function for a given value of 'n'.
+
+    Arguments:
+    coefficients -- a list of coefficients of the polynomial in ascending order of degree
+    n -- the value at which the polynomial is evaluated
+
+    Returns:
+    The value of the polynomial at 'n'
+    """
+    result = 0
+    degree = len(coefficients) - 1
+    for i in range(len(coefficients)):
+        result += coefficients[i] * (n ** (degree - i))
+    return result
+
+
+# Example usage
+coefficients = [4, 2, 9]  # coefficients of the polynomial: 4n^2 + 2n + 9
+n = 5  # value of 'n'
+result = evaluate_polynomial(coefficients, n)
+print(f"The value of the polynomial at n = {n} is: {result}")
+
+
+
+
+
+
+Answer 7
+
+class Graph:
+    def __init__(self, num_vertices):
+        self.num_vertices = num_vertices
+        self.adj_list = [[] for _ in range(num_vertices)]
+        
+    def add_edge(self, u, v):
+        self.adj_list[u].append(v)
+        self.adj_list[v].append(u)
+        
+    def is_complete_graph(self):
+        for u in range(self.num_vertices):
+            for v in range(u + 1, self.num_vertices):
+                if v not in self.adj_list[u]:
+                    return False
+        return True
+
+
+# Example usage
+num_vertices = 5
+graph = Graph(num_vertices)
+
+# Add edges to the graph
+graph.add_edge(0, 1)
+graph.add_edge(0, 2)
+graph.add_edge(0, 3)
+graph.add_edge(0, 4)
+graph.add_edge(1, 2)
+graph.add_edge(1, 3)
+graph.add_edge(1, 4)
+graph.add_edge(2, 3)
+graph.add_edge(2, 4)
+graph.add_edge(3, 4)
+
+# Check if the graph is complete
+if graph.is_complete_graph():
+    print("The graph is complete.")
+else:
+    print("The graph is not complete.")
+
+
+
+Answer 8 
+
+from collections import defaultdict
+
+def compute_degrees(graph):
+    in_degree = defaultdict(int)
+    out_degree = defaultdict(int)
+    
+    for vertex, edges in graph.items():
+        out_degree[vertex] = len(edges)
+        for edge in edges:
+            in_degree[edge] += 1
+    
+    return in_degree, out_degree
+
+# Example graph
+graph = {
+    'A': ['B', 'C'],
+    'B': ['C', 'D'],
+    'C': ['D'],
+    'D': ['A']
+}
+
+in_degrees, out_degrees = compute_degrees(graph)
+
+print("Vertex\tIn-degree\tOut-degree")
+for vertex in graph:
+    print(f"{vertex}\t{in_degrees[vertex]}\t\t{out_degrees[vertex]}")
