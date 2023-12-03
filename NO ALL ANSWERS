@@ -1,0 +1,234 @@
+Code 1
+import sympy as sp
+x1,x2= sp.symbols('x1 x2')
+function= input("Enter the function")
+gradient= [sp.diff(function,x1), sp.diff(function,x2)]
+hassien = [[sp.diff(gradient [0],x1), sp.diff(gradient [0],x2)],[sp.diff(gradient [0],x1), sp.diff(gradient [0],x2)]]
+print("Gradient:")
+print(gradient)
+print ("\nHassien:")
+print (hassien)
+Output:
+
+
+
+
+Code 2
+import numpy as np
+
+def objective_function(x):
+    return x**2 + 4*x + 4
+
+def gradient(x):
+    return 2*x + 4
+
+def line_search(initial_x, learning_rate, epsilon):
+    x = initial_x
+    iteration = 0
+
+    while True:
+        gradient_x = gradient(x)
+        new_x = x - learning_rate * gradient_x
+
+        # Check for convergence
+        if abs(new_x - x) < epsilon:
+            break
+
+        x = new_x
+        iteration += 1
+
+    return x, objective_function(x), iteration
+
+# Initial parameters
+initial_x = 0.0
+learning_rate = 0.1
+epsilon = 1e-6
+
+result_x, result_min, iterations = line_search(initial_x, learning_rate, epsilon)
+
+print(f"Minimum value found at x = {result_x}")
+print(f"Minimum objective function value = {result_min}")
+print(f"Iterations: {iterations}")
+Output:
+
+
+
+
+Code 3:
+import matplotlib.pyplot as plt
+
+# Define the constraints
+# Coefficients of the form: Ax + By <= C
+constraints = [
+    (2, 1, 20),
+    (4, -5, 10)
+]
+
+# Define the objective function coefficients
+# Z = cx + dy
+c = 3
+d = 4
+
+# Create a function to plot the constraints
+def plot_constraints():
+    plt.figure()
+    for constraint in constraints:
+        A, B, C = constraint
+        x = [0, C / A]  # considering x = 0 and x = C/A to plot lines
+        y = [(C - A * xi) / B for xi in x]
+        plt.plot(x, y, label=f"{A}x + {B}y <= {C}")
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.axhline(0, color='black',linewidth=0.5)
+    plt.axvline(0, color='black',linewidth=0.5)
+    plt.legend()
+    plt.show()
+
+# Function to calculate Z value
+def calculate_Z(x, y):
+    return c * x + d * y
+
+# Finding corner points and calculating Z values
+def find_optimal_solution():
+    corner_points = []
+    for constraint in constraints:
+        A, B, C = constraint
+        x = 0 if A == 0 else C / A
+        y = 0 if B == 0 else C / B
+        corner_points.append((x, y))
+    
+    max_Z = float('-inf')
+    optimal_point = None
+    for point in corner_points:
+        x, y = point
+        current_Z = calculate_Z(x, y)
+        if current_Z > max_Z:
+            max_Z = current_Z
+            optimal_point = point
+
+    return optimal_point, max_Z
+
+# Plot the constraints
+plot_constraints()
+
+# Calculate the optimal solution
+optimal_solution, max_Z_value = find_optimal_solution()
+
+# Display the optimal solution
+print(f"The optimal solution is at point: {optimal_solution} with Z value: {max_Z_value}")
+Output:
+
+
+
+
+Code 4
+import numpy as np
+import matplotlib.pyplot as plt
+# Define the function f(x)
+def objective_function(x):
+    return -10 * np.cos(np.pi * x - 2.2) + (x + 1.5) * x
+# Generate x values
+x = np.linspace(-5, 5, 20)
+print(x)
+
+y = objective_function(x)
+print(y)
+
+plt.plot(x, y, label='f(x) = -10Cos(pi x - 2.2) + (x + 1.5) * x')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.title(' Function f(x)')
+plt.grid(True)
+
+min_y = min(y)
+min_x = x[np.argmin(y)]
+plt.scatter(min_x, min_y, color='blue', label=f'Minimum: ({min_x}, {min_y})')
+
+plt.legend()
+plt.show()
+
+print("Global optimal solution is", min_x)
+print("Optimal function value is”, min_y)
+Output:
+
+
+
+
+Code 5:
+import numpy as np
+from scipy.optimize import differential_evolution
+
+def objective_function(x):
+    return -10 * np.cos(np.pi * x - 2.2) + (x + 1.5) * x
+bounds = [(-10, 10)]  
+result = differential_evolution(objective_function, bounds)
+
+min_x = result.x
+global_min_val = result.fun
+
+print("global min x: ",min_x)
+print("Global Optimal Solution:")
+print(f"x = {min_x[0]}")
+print(f"f(x) = {global_min_val}")
+Output:
+
+
+
+Code 6:
+from sympy import symbols, diff, solve, Matrix
+x, y, l = symbols('x y lambda')
+f = x**2 + y**2
+g = x + y - 1
+# Define the Lagrangian
+L = f - l * g
+
+# Compute partial derivatives
+partials = [diff(L, var) for var in (x, y, l)]
+
+# Solve the system of equations
+solution = solve(partials, (x, y, l), dict=True)[0]
+
+# Extract the optimal values
+optimal_x = solution[x]
+optimal_y = solution[y]
+
+# Compute the Hessian matrix
+
+# Compute the Hessian matrix using a list of lists
+hessian_list = []
+
+# Iterate over var2
+for var2 in (x, y, l):
+    # Initialize a row for var2
+    row = []
+
+    # Iterate over var1
+    for var1 in (x, y, l):
+        # Calculate the second-order partial derivative and append to the row
+        row.append(diff(L.diff(var1), var2))
+
+    # Append the row to the Hessian list
+    hessian_list.append(row)
+
+# Create an instance of the Matrix class from the list of lists
+hessian_matrix = Matrix(hessian_list)
+
+# Display the Hessian matrix
+print(hessian_matrix)
+
+hessian_determinant = hessian_matrix.det()
+if hessian_determinant > 0:
+    print("Stationary point is a local minimum.")
+elif hessian_determinant < 0:
+    print("Stationary point is a local maximum.")
+else:6
+    print("Second-order test inconclusive (saddle point or test fails).")
+
+# Display the result
+print("Optimal solution:")
+print(f"x: {optimal_x}")
+print(f"y: {optimal_y}")
+Output:
+
+
+
