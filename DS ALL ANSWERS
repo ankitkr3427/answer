@@ -717,7 +717,7 @@ int main() {
     return 0;
 }
 
-ANS 6
+ANS 7
 
 
   #include <iostream>
