@@ -1,0 +1,893 @@
+ANS 1.
+  
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) : data(value), next(nullptr) {}
+};
+
+class SinglyLinkedList {
+private:
+    Node* head;
+
+public:
+    SinglyLinkedList() : head(nullptr) {}
+
+    void insertAtBeginning(int x) {
+        Node* newNode = new Node(x);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    void insertAtPosition(int i, int x) {
+        if (i == 0) {
+            insertAtBeginning(x);
+            return;
+        }
+
+        Node* newNode = new Node(x);
+        Node* current = head;
+        int position = 0;
+
+        while (current && position < i - 1) {
+            current = current->next;
+            position++;
+        }
+
+        if (!current) {
+            std::cout << "Position out of bounds." << std::endl;
+            return;
+        }
+
+        newNode->next = current->next;
+        current->next = newNode;
+    }
+
+    void removeFromBeginning() {
+        if (!head) {
+            std::cout << "List is empty." << std::endl;
+            return;
+        }
+
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    void removeFromPosition(int i) {
+        if (!head) {
+            std::cout << "List is empty." << std::endl;
+            return;
+        }
+
+        if (i == 0) {
+            removeFromBeginning();
+            return;
+        }
+
+        Node* current = head;
+        int position = 0;
+
+        while (current && position < i - 1) {
+            current = current->next;
+            position++;
+        }
+
+        if (!current || !current->next) {
+            std::cout << "Position out of bounds." << std::endl;
+            return;
+        }
+
+        Node* temp = current->next;
+        current->next = current->next->next;
+        delete temp;
+    }
+
+    Node* searchElement(int x) {
+        Node* current = head;
+
+        while (current) {
+            if (current->data == x) {
+                return current;
+            }
+            current = current->next;
+        }
+
+        return nullptr;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            std::cout << current->data << " -> ";
+            current = current->next;
+        }
+        std::cout << "nullptr" << std::endl;
+    }
+};
+
+int main() {
+    SinglyLinkedList linkedList;
+    linkedList.insertAtBeginning(3);
+    linkedList.insertAtBeginning(2);
+    linkedList.insertAtBeginning(1);
+    linkedList.display();
+
+    linkedList.insertAtPosition(1, 5);
+    linkedList.display();
+
+    linkedList.removeFromBeginning();
+    linkedList.display();
+
+    linkedList.removeFromPosition(1);
+    linkedList.display();
+
+    Node* searchResult = linkedList.searchElement(5);
+    if (searchResult) {
+        std::cout << "Element 5 found at position: " << searchResult->data << std::endl;
+    } else {
+        std::cout << "Element 5 not found." << std::endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
+
+ANS 2
+
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int value) : data(value), prev(nullptr), next(nullptr) {}
+};
+
+class DoublyLinkedList {
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+
+    void insertAtBeginning(int x) {
+        Node* newNode = new Node(x);
+
+        if (!head) {
+            head = tail = newNode;
+        } else {
+            newNode->next = head;
+            head->prev = newNode;
+            head = newNode;
+        }
+    }
+
+    void insertAtEnd(int x) {
+        Node* newNode = new Node(x);
+
+        if (!tail) {
+            head = tail = newNode;
+        } else {
+            newNode->prev = tail;
+            tail->next = newNode;
+            tail = newNode;
+        }
+    }
+
+    void removeFromBeginning() {
+        if (!head) {
+            std::cout << "List is empty." << std::endl;
+            return;
+        }
+
+        Node* temp = head;
+
+        if (head == tail) {
+            head = tail = nullptr;
+        } else {
+            head = head->next;
+            head->prev = nullptr;
+        }
+
+        delete temp;
+    }
+
+    void removeFromEnd() {
+        if (!tail) {
+            std::cout << "List is empty." << std::endl;
+            return;
+        }
+
+        Node* temp = tail;
+
+        if (head == tail) {
+            head = tail = nullptr;
+        } else {
+            tail = tail->prev;
+            tail->next = nullptr;
+        }
+
+        delete temp;
+    }
+
+    void display() {
+        Node* current = head;
+        while (current) {
+            std::cout << current->data << " <-> ";
+            current = current->next;
+        }
+        std::cout << "nullptr" << std::endl;
+    }
+};
+
+int main() {
+    DoublyLinkedList doublyLinkedList;
+    doublyLinkedList.insertAtBeginning(3);
+    doublyLinkedList.insertAtBeginning(2);
+    doublyLinkedList.insertAtBeginning(1);
+    doublyLinkedList.display();
+
+    doublyLinkedList.insertAtEnd(4);
+    doublyLinkedList.display();
+
+    doublyLinkedList.removeFromBeginning();
+    doublyLinkedList.display();
+
+    doublyLinkedList.removeFromEnd();
+    doublyLinkedList.display();
+
+    return 0;
+}
+
+
+
+
+ANS 3
+
+#include <iostream>
+
+class Node {
+public:
+    int data;
+    Node* next;
+
+    Node(int value) : data(value), next(nullptr) {}
+};
+
+class CircularLinkedList {
+private:
+    Node* head;
+
+public:
+    CircularLinkedList() : head(nullptr) {}
+
+    void insert(int x) {
+        Node* newNode = new Node(x);
+
+        if (!head) {
+            head = newNode;
+            newNode->next = head;
+        } else {
+            Node* temp = head;
+            while (temp->next != head) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+            newNode->next = head;
+        }
+    }
+
+    void remove(int x) {
+        if (!head) {
+            std::cout << "List is empty." << std::endl;
+            return;
+        }
+
+        Node* current = head;
+        Node* prev = nullptr;
+
+        do {
+            if (current->data == x) {
+                if (prev) {
+                    prev->next = current->next;
+                    delete current;
+                    return;
+                } else {
+                    if (current->next == head) {
+                        head = nullptr;
+                    } else {
+                        Node* temp = head;
+                        while (temp->next != head) {
+                            temp = temp->next;
+                        }
+                        temp->next = head->next;
+                        head = head->next;
+                        delete current;
+                    }
+                    return;
+                }
+            }
+
+            prev = current;
+            current = current->next;
+        } while (current != head);
+
+        std::cout << "Element " << x << " not found." << std::endl;
+    }
+
+    Node* search(int x) {
+        if (!head) {
+            std::cout << "List is empty." << std::endl;
+            return nullptr;
+        }
+
+        Node* current = head;
+
+        do {
+            if (current->data == x) {
+                return current;
+            }
+
+            current = current->next;
+        } while (current != head);
+
+        std::cout << "Element " << x << " not found." << std::endl;
+        return nullptr;
+    }
+
+    void display() {
+        if (!head) {
+            std::cout << "List is empty." << std::endl;
+            return;
+        }
+
+        Node* current = head;
+
+        do {
+            std::cout << current->data << " -> ";
+            current = current->next;
+        } while (current != head);
+
+        std::cout << "Head" << std::endl;
+    }
+};
+
+int main() {
+    CircularLinkedList circularLinkedList;
+    circularLinkedList.insert(1);
+    circularLinkedList.insert(2);
+    circularLinkedList.insert(3);
+    circularLinkedList.display();
+
+    circularLinkedList.remove(2);
+    circularLinkedList.display();
+
+    Node* searchResult = circularLinkedList.search(3);
+    if (searchResult) {
+        std::cout << "Element 3 found at address: " << searchResult << std::endl;
+    }
+
+    return 0;
+}
+
+ANS 4
+
+#include<iostream>
+#include<stack>
+using namespace std;
+
+int EvaluatePostfix(string expression);
+int PerformOperation(char operation, int operand1, int operand2);
+bool IsOperator(char C);
+bool IsNumericDigit(char C);
+
+int main() 
+{
+	string expression; 
+	cout<<"Enter Postfix Expression \n";
+	getline(cin,expression);
+	int result = EvaluatePostfix(expression);
+	cout<<"Output = "<<result<<"\n";
+	return 0;
+}
+
+int EvaluatePostfix(string expression)
+{
+	stack<int> S;
+
+	for(int i = 0;i< expression.length();i++) {
+
+		if(expression[i] == ' ' || expression[i] == ',') continue; 
+
+		else if(IsOperator(expression[i])) {
+			int operand2 = S.top(); S.pop();
+			int operand1 = S.top(); S.pop();
+			int result = PerformOperation(expression[i], operand1, operand2);
+			S.push(result);
+		}
+		else if(IsNumericDigit(expression[i])){
+			int operand = 0; 
+			while(i<expression.length() && IsNumericDigit(expression[i])) {
+				operand = (operand*10) + (expression[i] - '0'); 
+				i++;
+			}
+			i--;
+			S.push(operand);
+		}
+	}
+	return S.top();
+}
+
+bool IsNumericDigit(char C) 
+{
+	if(C >= '0' && C <= '9') return true;
+	return false;
+}
+
+bool IsOperator(char C)
+{
+	if(C == '+' || C == '-' || C == '*' || C == '/')
+		return true;
+
+	return false;
+}
+
+int PerformOperation(char operation, int operand1, int operand2)
+{
+	if(operation == '+') return operand1 +operand2;
+	else if(operation == '-') return operand1 - operand2;
+	else if(operation == '*') return operand1 * operand2;
+	else if(operation == '/') return operand1 / operand2;
+
+	else cout<<"Unexpected Error \n";
+	return -1; 
+    }
+
+ANS 5
+
+
+#include <iostream>
+#include <queue>
+
+class Queue {
+private:
+    std::queue<int> data;
+
+public:
+    // Enqueue (push) an element to the back of the queue
+    void enqueue(int value) {
+        data.push(value);
+    }
+
+    // Dequeue (pop) an element from the front of the queue
+    void dequeue() {
+        if (!isEmpty()) {
+            data.pop();
+        } else {
+            std::cerr << "Error: Queue underflow." << std::endl;
+            // You may want to handle the error differently
+        }
+    }
+
+    // Get the front element of the queue without removing it
+    int front() const {
+        if (!isEmpty()) {
+            return data.front();
+        } else {
+            std::cerr << "Error: Queue is empty." << std::endl;
+            // You may want to handle the error differently
+            return -1; // Placeholder value, you can choose a different approach
+        }
+    }
+
+    // Check if the queue is empty
+    bool isEmpty() const {
+        return data.empty();
+    }
+
+    // Get the size of the queue
+    size_t size() const {
+        return data.size();
+    }
+};
+
+int main() {
+    // Example usage of the Queue ADT
+    Queue myQueue;
+
+    myQueue.enqueue(10);
+    myQueue.enqueue(20);
+    myQueue.enqueue(30);
+
+    std::cout << "Front element: " << myQueue.front() << std::endl;
+    std::cout << "Queue size: " << myQueue.size() << std::endl;
+
+    myQueue.dequeue();
+    std::cout << "After dequeue, front element: " << myQueue.front() << std::endl;
+    std::cout << "Queue size: " << myQueue.size() << std::endl;
+
+    return 0;
+}
+
+
+ANS 6
+
+#include <iostream>
+
+class TreeNode {
+public:
+    int data;
+    TreeNode* left;
+    TreeNode* right;
+
+    TreeNode(int value) : data(value), left(nullptr), right(nullptr) {}
+};
+
+class BinarySearchTree {
+private:
+    TreeNode* root;
+
+    // Private helper functions
+    TreeNode* insert(TreeNode* node, int value);
+    TreeNode* remove(TreeNode* node, int value);
+    TreeNode* findMin(TreeNode* node);
+    TreeNode* search(TreeNode* node, int value);
+    void displayPreorder(TreeNode* node);
+    void displayInorder(TreeNode* node);
+    void displayPostorder(TreeNode* node);
+
+public:
+    BinarySearchTree() : root(nullptr) {}
+
+    // Public interface
+    void insert(int value);
+    void remove(int value);
+    bool search(int value);
+    void displayPreorder();
+    void displayInorder();
+    void displayPostorder();
+};
+
+// Insert a value into the BST
+TreeNode* BinarySearchTree::insert(TreeNode* node, int value) {
+    if (node == nullptr) {
+        return new TreeNode(value);
+    }
+
+    if (value < node->data) {
+        node->left = insert(node->left, value);
+    } else if (value > node->data) {
+        node->right = insert(node->right, value);
+    }
+
+    return node;
+}
+
+void BinarySearchTree::insert(int value) {
+    root = insert(root, value);
+}
+
+// Remove a value from the BST
+TreeNode* BinarySearchTree::remove(TreeNode* node, int value) {
+    if (node == nullptr) {
+        return nullptr;
+    }
+
+    if (value < node->data) {
+        node->left = remove(node->left, value);
+    } else if (value > node->data) {
+        node->right = remove(node->right, value);
+    } else {
+        // Node with one or no child
+        if (node->left == nullptr) {
+            TreeNode* temp = node->right;
+            delete node;
+            return temp;
+        } else if (node->right == nullptr) {
+            TreeNode* temp = node->left;
+            delete node;
+            return temp;
+        }
+
+        // Node with two children
+        TreeNode* temp = findMin(node->right);
+        node->data = temp->data;
+        node->right = remove(node->right, temp->data);
+    }
+
+    return node;
+}
+
+void BinarySearchTree::remove(int value) {
+    root = remove(root, value);
+}
+
+// Find the minimum value in the BST
+TreeNode* BinarySearchTree::findMin(TreeNode* node) {
+    while (node->left != nullptr) {
+        node = node->left;
+    }
+    return node;
+}
+
+// Search for a value in the BST
+TreeNode* BinarySearchTree::search(TreeNode* node, int value) {
+    if (node == nullptr || node->data == value) {
+        return node;
+    }
+
+    if (value < node->data) {
+        return search(node->left, value);
+    } else {
+        return search(node->right, value);
+    }
+}
+
+bool BinarySearchTree::search(int value) {
+    return search(root, value) != nullptr;
+}
+
+// Display elements of the BST in preorder traversal
+void BinarySearchTree::displayPreorder(TreeNode* node) {
+    if (node != nullptr) {
+        std::cout << node->data << " ";
+        displayPreorder(node->left);
+        displayPreorder(node->right);
+    }
+}
+
+void BinarySearchTree::displayPreorder() {
+    displayPreorder(root);
+    std::cout << std::endl;
+}
+
+// Display elements of the BST in inorder traversal
+void BinarySearchTree::displayInorder(TreeNode* node) {
+    if (node != nullptr) {
+        displayInorder(node->left);
+        std::cout << node->data << " ";
+        displayInorder(node->right);
+    }
+}
+
+void BinarySearchTree::displayInorder() {
+    displayInorder(root);
+    std::cout << std::endl;
+}
+
+// Display elements of the BST in postorder traversal
+void BinarySearchTree::displayPostorder(TreeNode* node) {
+    if (node != nullptr) {
+        displayPostorder(node->left);
+        displayPostorder(node->right);
+        std::cout << node->data << " ";
+    }
+}
+
+void BinarySearchTree::displayPostorder() {
+    displayPostorder(root);
+    std::cout << std::endl;
+}
+
+int main() {
+    BinarySearchTree bst;
+
+    // Insert elements
+    bst.insert(50);
+    bst.insert(30);
+    bst.insert(70);
+    bst.insert(20);
+    bst.insert(40);
+    bst.insert(60);
+    bst.insert(80);
+
+    // Display elements in different traversal orders
+    std::cout << "Preorder: ";
+    bst.displayPreorder();
+
+    std::cout << "Inorder: ";
+    bst.displayInorder();
+
+    std::cout << "Postorder: ";
+    bst.displayPostorder();
+
+    // Search for elements
+    std::cout << "Search for 40: " << (bst.search(40) ? "Found" : "Not found") << std::endl;
+    std::cout << "Search for 90: " << (bst.search(90) ? "Found" : "Not found") << std::endl;
+
+    // Remove an element
+    bst.remove(30);
+
+    // Display elements after removal
+    std::cout << "Inorder after removal: ";
+    bst.displayInorder();
+
+    return 0;
+}
+
+ANS 6
+
+
+  #include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+class AVLNode {
+public:
+    int data;
+    AVLNode* left;
+    AVLNode* right;
+    int height;
+
+    AVLNode(int value) : data(value), left(nullptr), right(nullptr), height(1) {}
+};
+
+class AVLTree {
+private:
+    AVLNode* root;
+
+    // Private helper functions
+    int getHeight(AVLNode* node);
+    int getBalanceFactor(AVLNode* node);
+    AVLNode* rotateRight(AVLNode* y);
+    AVLNode* rotateLeft(AVLNode* x);
+    AVLNode* insert(AVLNode* node, int value);
+    AVLNode* search(AVLNode* node, int value);
+
+public:
+    AVLTree() : root(nullptr) {}
+
+    // Public interface
+    void insert(int value);
+    bool search(int value);
+};
+
+// Get the height of a node
+int AVLTree::getHeight(AVLNode* node) {
+    if (node == nullptr) {
+        return 0;
+    }
+    return node->height;
+}
+
+// Get the balance factor of a node
+int AVLTree::getBalanceFactor(AVLNode* node) {
+    if (node == nullptr) {
+        return 0;
+    }
+    return getHeight(node->left) - getHeight(node->right);
+}
+
+// Right rotation
+AVLNode* AVLTree::rotateRight(AVLNode* y) {
+    AVLNode* x = y->left;
+    AVLNode* T2 = x->right;
+
+    // Perform rotation
+    x->right = y;
+    y->left = T2;
+
+    // Update heights
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+
+    return x;
+}
+
+// Left rotation
+AVLNode* AVLTree::rotateLeft(AVLNode* x) {
+    AVLNode* y = x->right;
+    AVLNode* T2 = y->left;
+
+    // Perform rotation
+    y->left = x;
+    x->right = T2;
+
+    // Update heights
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+
+    return y;
+}
+
+// Insert a value into the AVL tree
+AVLNode* AVLTree::insert(AVLNode* node, int value) {
+    // Standard BST insert
+    if (node == nullptr) {
+        return new AVLNode(value);
+    }
+
+    if (value < node->data) {
+        node->left = insert(node->left, value);
+    } else if (value > node->data) {
+        node->right = insert(node->right, value);
+    } else {
+        // Duplicate values are not allowed
+        return node;
+    }
+
+    // Update height of the current node
+    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+
+    // Get the balance factor
+    int balance = getBalanceFactor(node);
+
+    // Left Left Case
+    if (balance > 1 && value < node->left->data) {
+        return rotateRight(node);
+    }
+
+    // Right Right Case
+    if (balance < -1 && value > node->right->data) {
+        return rotateLeft(node);
+    }
+
+    // Left Right Case
+    if (balance > 1 && value > node->left->data) {
+        node->left = rotateLeft(node->left);
+        return rotateRight(node);
+    }
+
+    // Right Left Case
+    if (balance < -1 && value < node->right->data) {
+        node->right = rotateRight(node->right);
+        return rotateLeft(node);
+    }
+
+    return node;
+}
+
+void AVLTree::insert(int value) {
+    root = insert(root, value);
+}
+
+// Search for a value in the AVL tree
+AVLNode* AVLTree::search(AVLNode* node, int value) {
+    if (node == nullptr || node->data == value) {
+        return node;
+    }
+
+    if (value < node->data) {
+        return search(node->left, value);
+    } else {
+        return search(node->right, value);
+    }
+}
+
+bool AVLTree::search(int value) {
+    return search(root, value) != nullptr;
+}
+
+int main() {
+    AVLTree avl;
+
+    // Insert elements
+    avl.insert(10);
+    avl.insert(20);
+    avl.insert(30);
+    avl.insert(40);
+    avl.insert(50);
+
+    // Search for elements
+    cout << "Search for 20: " << (avl.search(20) ? "Found" : "Not found") << endl;
+    cout << "Search for 25: " << (avl.search(25) ? "Found" : "Not found") << endl;
+
+    return 0;
+}
+
+
+
+  
