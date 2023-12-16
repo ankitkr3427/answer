@@ -1,0 +1,5 @@
+16 (a) t1 = (1, 2, 5, 7, 9, 2, 4, 6, 8, 10)
+
+half = len(t1) // 2
+print(*t1[:half])
+print(*t1[half:])
