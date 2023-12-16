@@ -1,0 +1,18 @@
+8. import string
+
+def char_info(char):
+    if char.isalpha():
+        print(f"{char} is a letter")
+        if char.isupper():
+            print(f"{char} is an uppercase letter")
+        else:
+            print(f"{char} is a lowercase letter")
+    elif char.isdigit():
+        print(f"{char} is a numeric digit")
+        print(f"{char} is called {string.digits[int(char)]}")
+    else:
+        print(f"{char} is a special character")
+
+# example usage
+char = 'A'
+char_info(char)
