@@ -1,0 +1,30 @@
+14.  import math
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
+    def distance(self, other):
+        if isinstance(other, Point):
+            return math.sqrt((self.x - other.x)**2 + (self.y - other.y)**2)
+        else:
+            return "Invalid input. Please enter a Point object."
+
+# Creating and printing Point objects
+point1 = Point(2, 3)
+point2 = Point(5, 7)
+point3 = Point(1, 1)
+
+print(point1)
+print(point2)
+print(point3)
+
+# Calculating and printing the distance between point1 and point2
+print(f"Distance between {point1} and {point2}: {point1.distance(point2)}")
+
+# Calculating and printing the distance between point1 and point3
+print(f")
