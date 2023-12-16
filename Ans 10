@@ -1,0 +1,18 @@
+10.   def swap_first_n_chars(string1, string2, n):
+    # get the first n characters of each string
+    chars1 = string1[:n]
+    chars2 = string2[:n]
+
+    # replace the first n characters of each string with the characters from the other string
+    string1 = chars2 + string1[n:]
+    string2 = chars1 + string2[n:]
+
+    return string1, string2
+
+# example usage
+string1 = 'hello'
+string2 = 'world'
+n = 2
+
+print(f"Strings after swapping first {n} characters:")
+print(swap_first_n_chars(string1, string2, n))
