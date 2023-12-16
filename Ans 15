@@ -1,0 +1,5 @@
+15. def print_dict():
+    cube_dict = {i: i**3 for i in range(1, 6)}
+    print(cube_dict)
+
+print_dict()
