@@ -1,0 +1,48 @@
+2. import math
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    sqrt_n = math.isqrt(n)
+    for i in range(3, sqrt_n + 1, 2):
+        if n % i == 0:
+            return False
+    return True
+
+def generate_primes(n):
+    primes = []
+    num = 2
+    while len(primes) < n:
+        if is_prime(num):
+            primes.append(num)
+        num += 1
+    return primes
+
+def first_n_primes(n):
+    if n < 1:
+        return []
+    primes = [2]
+    num = 3
+    while len(primes) < n:
+        if is_prime(num):
+            primes.append(num)
+        num += 2
+    return primes
+
+# example usage
+n = 20
+
+if is_prime(n):
+    print(f"{n} is a prime number")
+else:
+    print(f"{n} is not a prime number")
+
+prime_numbers = generate_primes(n)
+print(f"The first {n} prime numbers are {prime_numbers}")
+
+first_n_prime_numbers = first_n_primes(n)
+print(f"The first {n} prime numbers are {first_n_prime_numbers}")
