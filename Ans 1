@@ -1,0 +1,19 @@
+1.   import cmath
+
+def quadratic_roots(a, b, c):
+    # calculate the discriminant
+    discriminant = (b**2) - (4*a*c)
+
+    # calculate two roots
+    root1 = (-b - cmath.sqrt(discriminant)) / (2 * a)
+    root2 = (-b + cmath.sqrt(discriminant)) / (2 * a)
+
+    return root1, root2
+
+# example usage
+a = 1
+b = 5
+c = 6
+
+root1, root2 = quadratic_roots(a, b, c)
+print(f"The roots of the quadratic equation are {root1} and {root2}")
