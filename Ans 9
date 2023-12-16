@@ -1,0 +1,20 @@
+9.   def char_freq(string, char):
+    return string.count(char)
+
+def char_replace(string, old_char, new_char):
+    return string.replace(old_char, new_char)
+
+def char_remove_first(string, char):
+    return string.replace(char, '', 1)
+
+def char_remove_all(string, char):
+    return string.replace(char, '')
+
+# example usage
+string = 'hello world'
+char = 'l'
+
+print(f"Frequency of {char}: {char_freq(string, char)}")
+print(f"String after replacing {char} with X: {char_replace(string, char, 'X')}")
+print(f"String after removing first occurrence of {char}: {char_remove_first(string, char)}")
+print(f"String after removing all occurrences of {char}: {char_remove_all(string, char)}")
