@@ -1,0 +1,7 @@
+17. try:
+    name = input("Enter your name: ")
+    if not name.isalpha():
+        raise ValueError("Name should contain only alphabets.")
+    print(f"Hello, {name}!")
+except ValueError as e:
+    print(f"Error: {e}")
