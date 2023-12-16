@@ -1,0 +1,20 @@
+16 (a) t1 = (1, 2, 5, 7, 9, 2, 4, 6, 8, 10)
+
+half = len(t1) // 2
+print(*t1[:half])
+print(*t1[half:])
+
+
+16 (b) even_t1 = tuple(i for i in t1 if i % 2 == 0)
+print(even_t1)
+
+
+16 (c) t2 = (11, 13, 15)
+t1_t2 = t1 + t2
+print(t1_t2)
+
+
+16 (d) max_value = max(t1_t2)
+min_value = min(t1_t2)
+print(f"Maximum value: {max_value}")
+print(f"Minimum value: {min_value}")
