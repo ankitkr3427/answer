@@ -1,0 +1,43 @@
+13. def read_file(file_name):
+    try:
+        with open(file_name, 'r') as file:
+            total_chars = total_words = total_lines = 0
+            char_freq = {}
+            even_lines = []
+            odd_lines = []
+
+            for line in file:
+                total_lines += 1
+                if total_lines % 2 == 0:
+                    even_lines.append(line)
+                else:
+                    odd_lines.append(line)
+
+                words = line.split()
+                total_words += len(words)
+
+                for char in line:
+                    total_chars += 1
+                    if char.isalpha():
+                        char = char.lower()
+                        if char in char_freq:
+                            char_freq[char] += 1
+                        else:
+                            char_freq[char] = 1
+
+            print(f"Total Characters: {total_chars}")
+            print(f"Total Words: {total_words}")
+            print(f"Total Lines: {total_lines}")
+
+            print("Character Frequencies:")
+            for char, freq in char_freq.items():
+                print(f"{char}: {freq}")
+
+            with open('File1', 'w') as even_file:
+                even_file.writelines(even_lines)
+
+            with open('File2', 'w') as odd_file:
+                odd_file.writelines(odd_lines)
+
+    except FileNotFoundError:
+        print(f"Error: The file '{file_name}' does not exist.")
