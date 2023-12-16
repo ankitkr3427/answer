@@ -1,0 +1,19 @@
+11.    def find_substring_indices(string1, string2):
+    # if string2 is not in string1 then return -1
+    if string2 not in string1:
+        return -1
+
+    # find the length of string2
+    length = len(string2)
+
+    # find all the occurrences of string2 in string1
+    indices = [i for i in range(len(string1)) if string1.startswith(string2, i)]
+
+    return indices
+
+# example usage
+string1 = 'hello world, world hello world hello'
+string2 = 'world'
+
+print(f"Indices of all occurrences of '{string2}' in '{string1}':")
+print(find_substring_indices(string1, string2))
