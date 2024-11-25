@@ -1,0 +1,52 @@
+
+Q5) Design a Finite Automata (FA) that accepts language EVEN-EVENover S={a, b}. Write a program to simulate this FA.
+
+#include <iostream>
+Using namespace std;
+void State1(string w, int i);
+void State2(string w, int i);
+void State3(string w, int i);
+void State4(string w, int i);
+void State4(string w, int i) {
+cout << "State 4\n";
+if (i == w.length()) {
+cout << "String is accepted\n";
+return;
+}
+if (w[i] == 'a') State3(w, i+1);
+if (w[i] == 'b') State1(w, i+1);
+}
+void State3(string w, int i) {
+cout << "State 3\n";
+if (i == w.length()) {
+cout << "String is rejected\n";
+return;
+}
+if (w[i] == 'a') State4(w, i+1);
+if (w[i] == 'b') State2(w, i+1);
+}
+void State2(string w, int i) {
+cout << "State 2\n";
+if (i == w.length()) {
+cout << "String is rejected\n";
+return;
+}
+if (w[i] == 'a') State1(w, i+1);
+if (w[i] == 'b') State3(w, i+1);
+}
+void State1(string w, int i) {
+cout << "State 1\n";
+if (i == w.length()) {
+cout << "String is rejected\n";
+return;
+}
+if (w[i] == 'a') State2(w, i+1);
+if (w[i] == 'b') State4(w, i+1);
+}
+main() {
+string w;
+cout << "Enter string: ";
+cin >> w;
+State1(w, 0);
+return 0;
+}
