@@ -1,0 +1,56 @@
+Q3) Design a Finite Automata (FA) that accepts language L1, over S={a, b}, comprising of all strings (of length 4 or more) having first two characters same as the last two. Write a program to simulate this FA.
+#include <iostream>
+#include <string>
+using namespace std;
+
+void State0(string w, int i, char first, char second);
+void State1(string w, int i, char first, char second);
+void State2(string w, int i, char first, char second);
+void State3(string w, int i, char first, char second);
+
+int main() {
+    string w;
+    cout << "Enter a string over {a, b}: ";
+    cin >> w;
+    if (w.length() < 4) {
+        cout << "String is rejected (length less than 4)." << endl;
+    } else {
+        State0(w, 0, '\0', '\0'); // Start with State 0
+    }
+    return 0;
+}
+
+void State0(string w, int i, char first, char second) {
+    if (i >= 2) {
+        State1(w, i, first, second); // Transition to State 1 after capturing first two characters
+    } else {
+        if (i == 0) {
+            first = w[i];
+        } else if (i == 1) {
+            second = w[i];
+        }
+        State0(w, i + 1, first, second); // Collect first two characters
+    }
+}
+
+void State1(string w, int i, char first, char second) {
+    if (i == w.length() - 2) {
+        State2(w, i, first, second); // Move to State 2 to check the last two characters
+    } else {
+        State1(w, i + 1, first, second); // Keep traversing until the last two characters
+    }
+}
+
+void State2(string w, int i, char first, char second) {
+    if (w[i] == first && w[i + 1] == second) {
+        State3(w, i, first, second); // Final state if last two characters match the first two
+    } else {
+        cout << "String is rejected" << endl;
+        return;
+    }
+}
+
+void State3(string w, int i, char first, char second) {
+    cout << "String is accepted" << endl; // String satisfies the condition
+    return;
+}
