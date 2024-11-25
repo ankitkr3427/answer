@@ -1,0 +1,41 @@
+
+Q6) Write a program to simulate an FA that accepts
+a. Union of the languages L1 and L2
+b. Intersection of the languages L1 and L2
+c. Language L1 L2 (concatenation).
+
+#include<iostream>
+#include <string.h>
+using namespace std;
+int unionLanguage(char* w) {
+int len = strlen(w);
+if (w[0] == 'a') return 1;
+if (w[len-1] == 'b') return 1;
+return 0;
+}
+int intersectionLanguage(char* w) {
+int len = strlen(w);
+if (w[0] == 'a' && w[len-1] == 'b') return 1;
+return 0;
+}
+int concatenationLanguage(char* w) {
+int len = strlen(w);
+for (int i = 0; i < len; i++) {
+if (w[0] == 'a') {
+if (w[len-1] == 'b') return 1;
+}
+}
+return 0;
+}
+main() {
+char w[100];
+cout << "Enter string: ";
+cin >> w;
+cout << "Union Language Result: "
+<< (unionLanguage(w) ? "Accepted" : "Rejected") << endl;
+cout << "Intersection Language Result: "
+<< (intersecitonLanguage(w) ? "Accepted" : "Rejected") << endl;
+cout << "Concatenation Language Result: "
+<< (concatenationLanguage(w) ? "Accepted" : "Rejected") << endl;
+return 0;
+}
