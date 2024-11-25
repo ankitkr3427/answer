@@ -1,0 +1,33 @@
+Q7) Design a PDA and write a program for simulating the machine
+which accepts the language {a^nb^n where n>0, S= {a, b}}.
+#include<iostream>
+#include <stack>
+#include <string.h>
+using namespace std;
+int simulatePDA(char* input) {
+stack<char> s;
+int i, len = strlen(input);
+int a_count = 0, b_count = 0;
+for (i = 0; input[i] != '\0'; i++) {
+if (input[i] == 'a') {
+s.push('a');
+a_count++;
+} else if (input[i] == 'b') {
+if (s.empty() || s.top() != 'a')
+return 0;
+s.pop();
+b_count++;
+}
+}
+return (a_count == b_count && s.empty());
+}
+main() {
+char input[100];
+cout << "Enter string: ";
+cin >> input;
+if (simulatePDA(input))
+cout << "String accepted\n";
+else
+cout << "String rejected\n";
+return 0;
+}
