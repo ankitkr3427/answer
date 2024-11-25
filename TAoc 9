@@ -1,0 +1,26 @@
+Q9) Design and simulate a Turing Machine that accepts the language
+a^nb^nc^n where n >0.
+
+#include <iostream>
+#include <string.h>
+using namespace std;
+int simulateTuringMachine(char* input) {
+int len = strlen(input);
+int a_count = 0, b_count = 0, c_count = 0;
+for (int i = 0; i < len; i++) {
+if (input[i] == 'a') a_count++;
+else if (input[i] == 'b') b_count++;
+else if (input[i] == 'c') c_count++;
+}
+return (a_count == b_count && b_count == c_count && a_count > 0);
+}
+main() {
+char input[100];
+cout << "Enter string: ";
+cin >> input;
+if (simulateTuringMachine(input))
+cout << "String accepted\n";
+else
+cout << "String rejected\n";
+return 0;
+}
