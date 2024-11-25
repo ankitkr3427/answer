@@ -1,0 +1,33 @@
+10) Design and simulate a Turing Machine that accepts the language
+a^nb^nc^n where n >0.
+
+#include <iostream>
+#include <string.h>
+using namespace std;
+void incrementBinary(char* input) {
+int len = strlen(input);
+int carry = 1;
+for (int i = len - 1; i >= 0; i--) {
+if (carry == 0)
+break;
+if (input[i] == '0') {
+input[i] = '1';
+carry = 0;
+} else {
+input[i] = '0';
+carry = 1;
+}
+}
+if (carry) {
+memmove(input + 1, input, len + 1);
+input[0] = '1';
+}
+}
+main() {
+char input[100];
+cout << "Enter binary number: ";
+cin >> input;
+incrementBinary(input);
+cout << "Incremented number: " << input << endl;
+return 0;
+}
