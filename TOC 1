@@ -1,0 +1,59 @@
+
+Q1) Design a Finite Automata (FA) that accepts all strings over S={0, 1} having three consecutive 1's as a substring. Write a program to simulate this FA.
+
+#include <iostream>
+using namespace std;
+
+void State0(string w, int i);
+void State1(string w, int i);
+void State2(string w, int i);
+void State3(string w, int i);
+
+int main() {
+    string w; // User-entered string
+    cout << "Enter a string: ";
+    cin >> w;
+    State0(w, 0); // Start with State0
+    return 0;
+}
+
+void State0(string w, int i) {
+    cout << "State 0" << endl;
+    if (i == w.length()) {
+        cout << "String is rejected" << endl; // Rejected, did not reach State3
+        return;
+    }
+    if (w[i] == '1') 
+        State1(w, i + 1); // Transition to State1 on '1'
+    else 
+        State0(w, i + 1); // Stay in State0 on '0'
+}
+
+void State1(string w, int i) {
+    cout << "State 1" << endl;
+    if (i == w.length()) {
+        cout << "String is rejected" << endl; // Rejected, did not reach State3
+        return;
+    }
+    if (w[i] == '1') 
+        State2(w, i + 1); // Transition to State2 on another '1'
+    else 
+        State0(w, i + 1); // Reset to State0 on '0'
+}
+
+void State2(string w, int i) {
+    cout << "State 2" << endl;
+    if (i == w.length()) {
+        cout << "String is rejected" << endl; // Rejected, did not reach State3
+        return;
+    }
+    if (w[i] == '1') 
+        State3(w, i + 1); // Transition to State3 on a third '1'
+    else 
+        State0(w, i + 1); // Reset to State0 on '0'
+}
+
+void State3(string w, int i) {
+    cout << "State 3" << endl;
+    cout << "String is accepted" << endl; // String contains three consecutive '1's
+}
