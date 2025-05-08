@@ -1,0 +1,140 @@
+% --- Facts ---
+
+male(john).
+male(mike).
+male(david).
+male(peter).
+male(james).
+
+female(anna).
+female(mary).
+female(susan).
+female(lisa).
+female(emma).
+
+parent(john, mike).
+parent(john, mary).
+parent(anna, mike).
+parent(anna, mary).
+
+parent(mike, david).
+parent(mike, susan).
+parent(lisa, david).
+parent(lisa, susan).
+
+parent(mary, james).
+parent(mary, emma).
+parent(peter, james).
+parent(peter, emma).
+
+% --- Rules ---
+
+% Basic Family Relationships
+parent(X, Y) :- % Parent of X is Y
+    parent(Y, X).
+
+sibling(X, Y) :- % X and Y are siblings
+    parent(Z, X), 
+    parent(Z, Y), 
+    X \= Y. 
+
+% Gender-Specific Relationships
+male(X) :- % Check if X is male
+    male(X). 
+
+female(X) :- % Check if X is female
+    female(X).
+
+father(X, Y) :- % X is father of Y
+    male(X), 
+    parent(X, Y).
+
+mother(X, Y) :- % X is mother of Y
+    female(X), 
+    parent(X, Y).
+
+son(X, Y) :- % X is son of Y
+    male(X), 
+    parent(Y, X).
+
+daughter(X, Y) :- % X is daughter of Y
+    female(X), 
+    parent(Y, X).
+
+% Grandparent Relationships
+grandparent(X, Y) :- % X is grandparent of Y
+    parent(X, Z), 
+    parent(Z, Y).
+
+grandchild(X, Y) :- % X is grandchild of Y
+    grandparent(Y, X). 
+
+grandfather(X, Y) :- % X is grandfather of Y
+    male(X), 
+    grandparent(X, Y).
+
+grandmother(X, Y) :- % X is grandmother of Y
+    female(X), 
+    grandparent(X, Y).
+
+grandson(X, Y) :- % X is grandson of Y
+    male(X), 
+    grandchild(X, Y).
+
+granddaughter(X, Y) :- % X is granddaughter of Y
+    female(X), 
+    grandchild(X, Y).
+
+maternal_grandfather(X, Y) :- % X is maternal grandfather of Y
+    male(X), 
+    parent(X, Z), 
+    parent(Z, Y), 
+    female(Z).
+
+maternal_grandmother(X, Y) :- % X is maternal grandmother of Y
+    female(X), 
+    parent(X, Z), 
+    parent(Z, Y), 
+    female(Z).
+
+paternal_grandfather(X, Y) :- % X is paternal grandfather of Y
+    male(X), 
+    parent(X, Z), 
+    parent(Z, Y), 
+    male(Z).
+
+paternal_grandmother(X, Y) :- % X is paternal grandmother of Y
+    female(X), 
+    parent(X, Z), 
+    parent(Z, Y), 
+    male(Z).
+
+% Other Relationships
+spouse(X, Y) :- % X and Y are spouses
+    parent(X, Z), 
+    parent(Y, Z).
+
+husband(X, Y) :- % X is husband of Y
+    male(X), 
+    spouse(X, Y).
+
+wife(X, Y) :- % X is wife of Y
+    female(X), 
+    spouse(X, Y).
+
+uncle_or_aunt(X, Y) :- % X is uncle or aunt of Y
+    sibling(X, Z), 
+    parent(Z, Y).
+
+brother(X, Y) :- % X is brother of Y
+    male(X), 
+    sibling(X, Y).
+
+sister(X, Y) :- % X is sister of Y
+    female(X), 
+    sibling(X, Y).
+
+cousin(X, Y) :- % X and Y are cousins
+    parent(Z, X), 
+    parent(W, Y), 
+    sibling(Z, W).

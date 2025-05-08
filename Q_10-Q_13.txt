@@ -1,0 +1,70 @@
+% Question-10:-
+
+% memb/2 predicate to check if X is a member of list L
+memb(X, [X|_]) :- !.
+memb(X, [_|T]) :- memb(X, T).
+
+% Main predicate to interactively read and check membership
+check_membership :-
+    write('Enter the element to check: '), read(X),
+    write('Enter the list (e.g., [1, 2, 3]): '), read(L),
+    (memb(X, L) -> write('Element is a member of the list.'); write('Element is not a member of the list.')),
+    nl.
+
+
+
+
+
+
+% Question-11 :-
+
+% sumlist/2 predicate to calculate the sum S of list L
+sumlist([], 0) :- !.
+sumlist([H|T], S) :-
+    sumlist(T, S1),
+    S is H + S1.
+
+% Main predicate to interactively read and calculate the sum
+calculate_sum :-
+    write('Enter the list (e.g., [1, 2, 3]): '), read(L),
+    sumlist(L, S),
+    write('The sum of the list is: '), write(S), nl.
+
+
+
+
+
+% Question-12:-
+
+% evenlength/1 predicate to check if a list has even length
+evenlength([]) :- !.
+evenlength([_|T]) :-
+    oddlength(T).
+
+% oddlength/1 predicate to check if a list has odd length
+oddlength([_|T]) :-
+    evenlength(T).
+
+% Main predicate to interactively check even or odd length
+check_length :-
+    write('Enter the list (e.g., [1, 2, 3]): '), read(L),
+    (evenlength(L) -> write('The list has even length.'); write('The list has odd length.')),
+    nl.
+
+
+
+
+
+% Question-13:-
+
+% maxlist/2 predicate to find the maximum number M in list L
+maxlist([H], H) :- !.
+maxlist([H|T], M) :-
+    maxlist(T, M1),
+    (H > M1 -> M = H; M = M1).
+
+% Main predicate to interactively find the maximum number
+find_max :-
+    write('Enter the list (e.g., [1, 2, 3]): '), read(L),
+    maxlist(L, M),
+    write('The maximum number in the list is: '), write(M), nl.

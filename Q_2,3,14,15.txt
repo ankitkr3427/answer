@@ -1,0 +1,92 @@
+%Question2:-
+
+% Base case: If L1 is empty, L3 is simply L2
+
+conc([], L2, L2).
+
+% Recursive case:
+% 1. Decompose L1 into Head (first element) and Tail (rest of the list)
+% 2. Concatenate Tail of L1 with L2 to get a new list Temp
+% 3. Construct L3 by adding Head of L1 to the beginning of Temp
+
+conc([H|T], L2, [H|Temp]) :-
+    conc(T, L2, Temp).
+
+
+
+
+
+%Question_3:-
+
+% Base case: An empty list is already reversed
+
+my_reverse([], []).
+
+% Recursive case:
+% 1. Decompose the list L into Head (first element) and Tail (rest of the list)
+% 2. Reverse the Tail of L recursively
+% 3. Append the Head of L to the end of the reversed Tail
+
+my_reverse([H|T], R) :-
+    my_reverse(T, RevT),
+    append(RevT, [H], R).
+
+% Helper predicate for appending two lists (you can use the built-in append/3 if available)
+append([], L, L).
+append([H|T], L, [H|R]) :-
+    append(T, L, R).
+
+
+
+
+
+
+% Question_14:-
+
+% Base case: Insert item I at the beginning of the list L
+
+insert(I, 1, L, [I|L]).
+
+% Recursive case: Insert item I at position N in the list [H|T]
+
+insert(I, N, [H|T], [H|R]) :-
+
+    % Ensure N is greater than 1 (not inserting at the beginning)
+
+    N > 1,
+
+    % Calculate the new position N1 by decrementing N by 1
+
+    N1 is N - 1,
+
+    % Recursively insert I at position N1 in the tail of the list T
+
+    insert(I, N1, T, R).
+
+% Base case: Handle empty list or invalid position
+
+insert(_, _, [], []).
+
+
+
+
+
+
+
+% Question_15:-
+
+% Base case: If the list is empty, deletion is not possible
+
+delete(_, [], []).
+
+% Base case: Delete the first element (N=1)
+
+delete(1, [_|T], T).
+
+% Recursive case: Delete the element at position N
+
+delete(N, [H|T], [H|R]) :-
+    N > 1,
+    N1 is N - 1,
+    delete(N1, T, R).
+

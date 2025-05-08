@@ -1,0 +1,102 @@
+% Question4:-
+
+% Define The Predicate 'sum' with three arguments:
+% - X: the first number
+% - Y: the second number
+% - Z: the sum of X and Y
+
+sum(X, Y, Z) :-
+    Z is X + Y.
+
+
+
+
+
+% Question_5:-
+
+% max(X, Y, M)
+%
+% This predicate determines the maximum value between two numbers X and Y.
+%
+% Arguments:
+%   - X: The first number.
+%   - Y: The second number.
+%   - M: The maximum value of X and Y.
+
+max(X, Y, X) :-
+    % If X is greater than or equal to Y, then X is the maximum.
+    X >= Y.
+
+max(X, Y, Y) :-
+    % If X is less than Y, then Y is the maximum.
+    X < Y.
+
+
+
+
+% Question_6:-
+
+% Base case: Factorial of 0 is 1
+factorial(0, 1).
+
+% Recursive case: Factorial of N is N * factorial(N-1)
+factorial(N, F) :-
+    N > 0,
+    N1 is N - 1,
+    factorial(N1, F1),
+    F is N * F1.
+
+
+
+
+
+
+% Question_7:-
+
+% Base cases for the first two terms of the Fibonacci series
+generate_fib(0, 0).
+generate_fib(1, 1).
+
+% Recursive case for calculating subsequent terms
+generate_fib(N, T) :-
+    N > 1,
+    N1 is N - 1,
+    N2 is N - 2,
+    generate_fib(N1, T1),
+    generate_fib(N2, T2),
+    T is T1 + T2.
+
+
+
+
+
+
+% Question_8:-
+
+% Base case: Any number raised to the power 0 is 1
+power(_, 0, 1).
+
+% Recursive case:
+power(Num, Pow, Ans) :-
+    Pow > 0,
+    Pow1 is Pow - 1,
+    power(Num, Pow1, Temp),
+    Ans is Num * Temp.
+
+
+
+
+
+
+
+% Question_9:-
+
+% Base case: Multiplying any number by 0 results in 0
+multi(_, 0, 0).
+
+% Recursive case:
+multi(N1, N2, R) :-
+    N2 > 0,
+    N21 is N2 - 1,
+    multi(N1, N21, R1),
+    R is N1 + R1.
