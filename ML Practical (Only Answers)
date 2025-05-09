@@ -1,0 +1,595 @@
+
+Naïve Bayes Classifier
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+gnb = GaussianNB()
+gnb.fit(X_train, y_train)
+y_pred = gnb.predict(X_test)
+y_prob = gnb.predict_proba(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred, target_names=iris.target_names)
+auc = roc_auc_score(y_test, y_prob, multi_class='ovr', average='macro')
+
+print(f"Accuracy: {accuracy:.4f}")
+print("\nConfusion Matrix:\n", cm)
+print("\nClassification Report:\n", report)
+print(f"\nAUC (Macro OVR): {auc:.4f}")
+
+# Note: TP, TN, FP, FN are typically calculated per class from the confusion matrix.
+# Example for class 0 (setosa) vs rest:
+# TP = cm[0, 0]
+# FN = cm[0, 1] + cm[0, 2]
+# FP = cm[1, 0] + cm[2, 0]
+# TN = cm[1, 1] + cm[1, 2] + cm[2, 1] + cm[2, 2]
+# Recall = TP / (TP + FN)
+# Specificity = TN / (TN + FP)
+# F1-Score = classification_report provides this per class
+
+
+
+
+
+
+
+Answer 2 
+
+Simple Linear Regression
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load data
+diabetes = load_diabetes()
+X = diabetes.data[:, np.newaxis, 2] # Using only the BMI feature
+y = diabetes.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train model
+slr = LinearRegression()
+slr.fit(X_train, y_train)
+
+# Predict
+y_pred = slr.predict(X_test)
+
+# Evaluate
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error (MSE): {mse:.4f}")
+print(f"R-squared (R2) Score: {r2:.4f}")
+print(f"Coefficient: {slr.coef_[0]:.4f}")
+print(f"Intercept: {slr.intercept_:.4f}")
+
+# Plotting
+plt.figure(figsize=(8, 6))
+plt.scatter(X_test, y_test, color='black', label='Actual data')
+plt.plot(X_test, y_pred, color='blue', linewidth=3, label='Regression line')
+plt.xlabel("BMI Feature")
+plt.ylabel("Diabetes Progression")
+plt.title("Simple Linear Regression Fit")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+Answer 3
+Multiple Linear Regression
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Load data
+diabetes = load_diabetes()
+X, y = diabetes.data, diabetes.target
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train model
+mlr = LinearRegression()
+mlr.fit(X_train, y_train)
+
+# Predict
+y_pred = mlr.predict(X_test)
+
+# Evaluate
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error (MSE): {mse:.4f}")
+print(f"R-squared (R2) Score: {r2:.4f}")
+print(f"Coefficients: {mlr.coef_}")
+print(f"Intercept: {mlr.intercept_:.4f}")
+
+# Plotting Predicted vs Actual
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.7, edgecolors='k')
+plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--', lw=2) # Diagonal line y=x
+plt.xlabel("Actual Values")
+plt.ylabel("Predicted Values")
+plt.title("Multiple Linear Regression: Actual vs. Predicted")
+plt.grid(True)
+plt.show()
+
+
+
+
+Answer 4
+
+Polynomial Regression
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.metrics import mean_squared_error, r2_score
+
+np.random.seed(0)
+X = 2 * np.random.rand(100, 1) - 1
+y = 0.5 * X**2 + X + 2 + np.random.randn(100, 1) * 0.1
+
+poly_features = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly_features.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(X_poly, y, test_size=0.3, random_state=42)
+
+poly_reg = LinearRegression()
+poly_reg.fit(X_train, y_train)
+y_pred = poly_reg.predict(X_test)
+
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error (MSE): {mse:.4f}")
+print(f"R-squared (R2) Score: {r2:.4f}")
+print(f"Coefficients: {poly_reg.coef_[0]}")
+print(f"Intercept: {poly_reg.intercept_[0]:.4f}")
+
+
+
+
+
+
+Answer 5
+
+Lasso and Ridge Regression
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import Lasso, Ridge
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler
+
+# Load data
+diabetes = load_diabetes()
+X, y = diabetes.data, diabetes.target
+
+# Scale data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+
+# Lasso Regression
+lasso = Lasso(alpha=0.1)
+lasso.fit(X_train, y_train)
+y_pred_lasso = lasso.predict(X_test)
+mse_lasso = mean_squared_error(y_test, y_pred_lasso)
+r2_lasso = r2_score(y_test, y_pred_lasso)
+
+print("--- Lasso Regression ---")
+print(f"Mean Squared Error (MSE): {mse_lasso:.4f}")
+print(f"R-squared (R2) Score: {r2_lasso:.4f}")
+print(f"Coefficients: {lasso.coef_}")
+print(f"Intercept: {lasso.intercept_:.4f}")
+
+# Ridge Regression
+ridge = Ridge(alpha=1.0)
+ridge.fit(X_train, y_train)
+y_pred_ridge = ridge.predict(X_test)
+mse_ridge = mean_squared_error(y_test, y_pred_ridge)
+r2_ridge = r2_score(y_test, y_pred_ridge)
+
+print("\n--- Ridge Regression ---")
+print(f"Mean Squared Error (MSE): {mse_ridge:.4f}")
+print(f"R-squared (R2) Score: {r2_ridge:.4f}")
+print(f"Coefficients: {ridge.coef_}")
+print(f"Intercept: {ridge.intercept_:.4f}")
+
+# Plotting Predicted vs Actual for Ridge
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred_ridge, alpha=0.7, edgecolors='k')
+plt.plot([y.min(), y.max()], [y.min(), y.max()], 'r--', lw=2) # Diagonal line y=x
+plt.xlabel("Actual Values")
+plt.ylabel("Predicted Values (Ridge)")
+plt.title("Ridge Regression: Actual vs. Predicted")
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+
+Answer 6 
+
+
+6. Logistic Regression
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score, roc_curve
+from sklearn.preprocessing import StandardScaler
+
+# Load data (binary classification)
+cancer = load_breast_cancer()
+X, y = cancer.data, cancer.target
+
+# Scale data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+
+# Train model
+log_reg = LogisticRegression(solver='liblinear', random_state=42)
+log_reg.fit(X_train, y_train)
+
+# Predict
+y_pred = log_reg.predict(X_test)
+y_prob = log_reg.predict_proba(X_test)[:, 1] # Probability for the positive class
+
+# Evaluate
+accuracy = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred, target_names=cancer.target_names)
+auc = roc_auc_score(y_test, y_prob)
+fpr, tpr, thresholds = roc_curve(y_test, y_prob)
+
+tn, fp, fn, tp = cm.ravel()
+error_rate = (fp + fn) / (tn + fp + fn + tp)
+recall = tp / (tp + fn)
+specificity = tn / (tn + fp)
+# F1-score is in the report
+
+print(f"Accuracy: {accuracy:.4f}")
+print(f"Error Rate: {error_rate:.4f}")
+print("\nConfusion Matrix:\n", cm)
+print(f"\nTrue Positives (TP): {tp}")
+print(f"True Negatives (TN): {tn}")
+print(f"False Positives (FP): {fp}")
+print(f"False Negatives (FN): {fn}")
+print(f"\nRecall (Sensitivity): {recall:.4f}")
+print(f"Specificity: {specificity:.4f}")
+print(f"AUC: {auc:.4f}")
+print("\nClassification Report:\n", report)
+
+# Plotting ROC Curve
+plt.figure(figsize=(8, 6))
+plt.plot(fpr, tpr, color='blue', lw=2, label=f'ROC curve (area = {auc:.2f})')
+plt.plot([0, 1], [0, 1], color='red', lw=2, linestyle='--', label='Chance level')
+plt.xlabel('False Positive Rate (FPR)')
+plt.ylabel('True Positive Rate (TPR)')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend(loc="lower right")
+plt.grid(True)
+plt.show()
+
+
+
+
+
+Answer 7
+
+Artificial Neural Network (Classification)
+import numpy as np
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
+from sklearn.preprocessing import StandardScaler
+
+cancer = load_breast_cancer()
+X, y = cancer.data, cancer.target
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+
+mlp = MLPClassifier(hidden_layer_sizes=(100,), max_iter=500, random_state=42, alpha=0.0001, solver='adam')
+mlp.fit(X_train, y_train)
+y_pred = mlp.predict(X_test)
+y_prob = mlp.predict_proba(X_test)[:, 1]
+
+accuracy = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred, target_names=cancer.target_names)
+auc = roc_auc_score(y_test, y_prob)
+
+tn, fp, fn, tp = cm.ravel()
+error_rate = (fp + fn) / (tn + fp + fn + tp)
+recall = tp / (tp + fn)
+specificity = tn / (tn + fp)
+
+
+print(f"Accuracy: {accuracy:.4f}")
+print(f"Error Rate: {error_rate:.4f}")
+print("\nConfusion Matrix:\n", cm)
+print(f"\nTrue Positives (TP): {tp}")
+print(f"True Negatives (TN): {tn}")
+print(f"False Positives (FP): {fp}")
+print(f"False Negatives (FN): {fn}")
+print(f"\nRecall (Sensitivity): {recall:.4f}")
+print(f"Specificity: {specificity:.4f}")
+# F1-Score is available in the classification report
+print(f"AUC: {auc:.4f}")
+print("\nClassification Report:\n", report)
+
+
+
+
+Answer 8
+
+K-NN Classifier
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
+from sklearn.preprocessing import StandardScaler
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+y_pred = knn.predict(X_test)
+y_prob = knn.predict_proba(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred, target_names=iris.target_names)
+auc = roc_auc_score(y_test, y_prob, multi_class='ovr', average='macro')
+
+print(f"Accuracy: {accuracy:.4f}")
+print("\nConfusion Matrix:\n", cm)
+print("\nClassification Report:\n", report)
+print(f"\nAUC (Macro OVR): {auc:.4f}")
+
+
+
+
+
+
+
+
+Answer 9
+
+Decision Tree Classification
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score
+
+iris = load_iris()
+X, y = iris.data, iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+dtree = DecisionTreeClassifier(random_state=42)
+dtree.fit(X_train, y_train)
+y_pred = dtree.predict(X_test)
+y_prob = dtree.predict_proba(X_test)
+
+accuracy = accuracy_score(y_test, y_pred)
+cm = confusion_matrix(y_test, y_pred)
+report = classification_report(y_test, y_pred, target_names=iris.target_names)
+auc = roc_auc_score(y_test, y_prob, multi_class='ovr', average='macro')
+
+print(f"Accuracy: {accuracy:.4f}")
+print("\nConfusion Matrix:\n", cm)
+print("\nClassification Report:\n", report)
+print(f"\nAUC (Macro OVR): {auc:.4f}")
+
+
+
+
+
+
+
+
+Anawer 10
+
+SVM Classification
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score, roc_curve
+from sklearn.preprocessing import StandardScaler, label_binarize
+from itertools import cycle
+
+# Load data
+iris = load_iris()
+X, y = iris.data, iris.target
+
+# Scale data
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Binarize the output for multi-class ROC (One-vs-Rest)
+y_bin = label_binarize(y, classes=[0, 1, 2])
+n_classes = y_bin.shape[1]
+
+# Split data
+X_train, X_test, y_train, y_test_bin = train_test_split(X_scaled, y_bin, test_size=0.3, random_state=42)
+_, _, y_train_orig, y_test_orig = train_test_split(X_scaled, y, test_size=0.3, random_state=42) # Keep original labels for report
+
+# Train model
+# Using probability=True for predict_proba, needed for ROC
+svm_clf = SVC(kernel='linear', probability=True, random_state=42)
+# Fit on original multi-class labels
+svm_clf.fit(X_train, y_train_orig)
+y_pred = svm_clf.predict(X_test)
+y_prob = svm_clf.predict_proba(X_test)
+
+# Evaluate (using original multi-class labels for standard metrics)
+accuracy = accuracy_score(y_test_orig, y_pred)
+cm = confusion_matrix(y_test_orig, y_pred)
+report = classification_report(y_test_orig, y_pred, target_names=iris.target_names)
+
+# Calculate AUC (Macro OVR)
+auc_macro = roc_auc_score(y_test_bin, y_prob, multi_class='ovr', average='macro')
+
+print(f"Accuracy: {accuracy:.4f}")
+print("\nConfusion Matrix:\n", cm)
+print("\nClassification Report:\n", report)
+print(f"\nAUC (Macro OVR): {auc_macro:.4f}")
+
+# Plotting ROC Curve for each class (One-vs-Rest)
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test_bin[:, i], y_prob[:, i])
+    roc_auc[i] = roc_auc_score(y_test_bin[:, i], y_prob[:, i])
+
+# Compute micro-average ROC curve and ROC area
+fpr["micro"], tpr["micro"], _ = roc_curve(y_test_bin.ravel(), y_prob.ravel())
+roc_auc["micro"] = roc_auc_score(y_test_bin, y_prob, multi_class='ovr', average='micro')
+
+
+plt.figure(figsize=(8, 6))
+colors = cycle(['aqua', 'darkorange', 'cornflowerblue'])
+for i, color in zip(range(n_classes), colors):
+    plt.plot(fpr[i], tpr[i], color=color, lw=2,
+             label='ROC curve of class {0} (area = {1:0.2f})'
+             ''.format(iris.target_names[i], roc_auc[i]))
+
+plt.plot([0, 1], [0, 1], 'k--', lw=2, label='Chance level')
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) - SVM (One-vs-Rest)')
+plt.legend(loc="lower right")
+plt.grid(True)
+plt.show()
+
+
+
+
+Answer 11
+
+
+
+K-Means Clustering
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
+
+iris = load_iris()
+X = iris.data
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+kmeans.fit(X_scaled)
+labels = kmeans.labels_
+centroids = kmeans.cluster_centers_
+
+silhouette_avg = silhouette_score(X_scaled, labels)
+
+print(f"Number of clusters: 3")
+print(f"Cluster Centroids:\n{centroids}")
+print(f"\nCluster Labels for first 10 samples:\n{labels[:10]}")
+print(f"\nSilhouette Score: {silhouette_avg:.4f}")
+
+
+
+
+
+
+Answer 12
+
+Hierarchical Clustering
+import numpy as np
+from sklearn.datasets import load_iris
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt # Needed for dendrogram plotting
+from scipy.cluster.hierarchy import dendrogram, linkage # Needed for dendrogram plotting
+
+iris = load_iris()
+X = iris.data
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Fit Agglomerative Clustering
+agg_clustering = AgglomerativeClustering(n_clusters=3, linkage='ward')
+labels = agg_clustering.fit_predict(X_scaled)
+
+silhouette_avg = silhouette_score(X_scaled, labels)
+
+print(f"Number of clusters: 3")
+print(f"Cluster Labels for first 10 samples:\n{labels[:10]}")
+print(f"\nSilhouette Score: {silhouette_avg:.4f}")
+
+# Optional: Dendrogram plotting (requires matplotlib and scipy)
+linked = linkage(X_scaled, 'ward')
+plt.figure(figsize=(10, 7))
+dendrogram(linked,
+           orientation='top',
+           distance_sort='descending',
+           show_leaf_counts=True)
+plt.title('Hierarchical Clustering Dendrogram (Ward)')
+plt.xlabel('Sample index')
+plt.ylabel('Distance')
+plt.show()
+
+
+
+
+
+
+
+
